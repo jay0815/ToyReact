@@ -9,6 +9,7 @@ module.exports = {
   },
   devServer: {
     index: 'index.html',
+    compress: false,
     contentBase: path.join(__dirname, 'dist'),
   },
   module: {
