@@ -1,19 +1,20 @@
 import { ToyReact, ToyReactDOM } from './src/index';
 
-let a = <div>123</div>;
+let a = <div>a</div>;
+
+let text = 'Hello ToyReact'
 
 class MyComponet extends ToyReact.Component {
 
   render() {
-    return  <div>
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
+    return  <article>
+      <h1>{text}</h1>
+      <p>1</p>
+      <div>3</div>
       {a}
       {this.children}
       {true}
-    </div>
+    </article>
   }
 }
 
@@ -23,6 +24,6 @@ let myInstance = <MyComponet name='self' id='1'>
 
 
 ToyReactDOM.render(
-  myComponetInstance,
+  myInstance,
   document.getElementById('root')
 )

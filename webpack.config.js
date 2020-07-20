@@ -25,7 +25,7 @@ module.exports = {
                 "@babel/plugin-transform-react-jsx",
                 {
                   pragma: "ToyReact.createElement",
-                  // "pragmaFrag": "Preact.Fragment"
+                  // "pragmaFrag": "ToyReact.Fragment"
                 },
               ],
             ],

@@ -1,5 +1,6 @@
 
 function createElement(type, attributes, ...children) {
+  console.log(type, attributes, children);
   let element = null;
   if(typeof type === 'string') {
     element = new ElementWrapper(type)
