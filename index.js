@@ -1,27 +1,70 @@
 import { ToyReact, ToyReactDOM } from './src/index';
 
-let a = <div>a</div>;
+class Board extends ToyReact.Component {
 
-let text = 'Hello ToyReact'
+  willMount(lifeState) {
+    console.log('Board will mount', lifeState);
+  }
 
-class MyComponet extends ToyReact.Component {
+  didMount(lifeState) {
+    console.log('Board did mount', lifeState);
+  }
+
+  renderSquare(i) {
+    return <Square value={i} />;
+  }
 
   render() {
-    return  <article>
-      <h1>{text}</h1>
-      <p>1</p>
-      <div>3</div>
-      {a}
-      {this.children}
-      {true}
-    </article>
+    return (
+      <div>
+        <div className="board-row">
+          {this.renderSquare(0)}
+          {this.renderSquare(1)}
+          {this.renderSquare(2)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(3)}
+          {this.renderSquare(4)}
+          {this.renderSquare(5)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(6)}
+          {this.renderSquare(7)}
+          {this.renderSquare(8)}
+        </div>
+      </div>
+    );
   }
 }
 
-let myInstance = <MyComponet name='self' id='1'>
-  <div>1</div>
-</MyComponet>;
+class Square extends ToyReact.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: null,
+    };
+  }
+
+  willUpdate(prevState, nextState) {
+    console.log('willUpdate');
+    console.log('prevState', prevState, 'nextState', nextState);
+  }
+
+  didUpdate() {
+    console.log('didUpdate', this.state);
+  }
+
+  render() {
+    return (
+      <button className="square" onClick={() => this.setState({value: 'X'})}>
+        {this.state.value ? this.state.value : ''}
+      </button>
+    );
+  }
+}
+
+let myInstance = <Board />;
 
 ToyReactDOM.render(
   myInstance,
