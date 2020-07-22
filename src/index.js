@@ -36,10 +36,13 @@ class Component {
   constructor() {
     this.children = [];
     this.props = Object.create(null);
-    this.LIFTE_CYCLE_STATE = 'init';
+    this.LIFE_CYCLE_STATE = 'init';
   }
 
   setAttribute(attribute, value) {
+    // ---------------------------
+    // ---- add Event Listener ---
+    // ---------------------------
     if(attribute.match(/^on([\s\S]+)$/)){
       // let eventName = RegExp.$1.replace(/^[\s\S]/, (s) => s.toLowerCase());
       // this.root.addEventListener(RegExp.$1.toLowerCase(), value);
@@ -53,17 +56,17 @@ class Component {
 
   mountTo(range) {
     // will mount
-    if(this.LIFTE_CYCLE_STATE === 'init') {
+    if(this.LIFE_CYCLE_STATE === 'init') {
       if(typeof this.willMount === 'function'){
-        this.willMount(JSON.stringify(this.LIFTE_CYCLE_STATE));
+        this.willMount(JSON.stringify(this.LIFE_CYCLE_STATE));
       }
     }
     this.range = range;
     this.update();
     // did mount
-    if(this.LIFTE_CYCLE_STATE === 'mounted') {
+    if(this.LIFE_CYCLE_STATE === 'mounted') {
       if(typeof this.didMount === 'function'){
-        this.didMount(JSON.stringify(this.LIFTE_CYCLE_STATE));
+        this.didMount(JSON.stringify(this.LIFE_CYCLE_STATE));
       }
     }
   }
@@ -77,8 +80,8 @@ class Component {
     this.range.deleteContents();
     const vdom = this.render();
     vdom.mountTo(this.range);
-    if(this.LIFTE_CYCLE_STATE === 'init'){
-      this.changeLIFTE_CYCLE_STATE('mounted');
+    if(this.LIFE_CYCLE_STATE === 'init'){
+      this.changeLifeCycleState('mounted');
     }
   }
 
@@ -117,19 +120,19 @@ class Component {
       return JSON.stringify(prevState) !== JSON.stringify(nextState)
     }
     if(diff(prevState, nextState)) {
-      if(this.LIFTE_CYCLE_STATE === 'mounted'){
+      if(this.LIFE_CYCLE_STATE === 'mounted'){
         // will Update
-        if(this.LIFTE_CYCLE_STATE === 'mounted') {
+        if(this.LIFE_CYCLE_STATE === 'mounted') {
           if(typeof this.willUpdate === 'function'){
             this.willUpdate(prevState, nextState);
           }
         }
       }
       this.update();
-      if(this.LIFTE_CYCLE_STATE === 'mounted'){
+      if(this.LIFE_CYCLE_STATE === 'mounted'){
         console.log('didUpdate');
         // did Update
-        if(this.LIFTE_CYCLE_STATE === 'mounted') {
+        if(this.LIFE_CYCLE_STATE === 'mounted') {
           if(typeof this.didUpdate === 'function'){
             this.didUpdate();
           }
@@ -138,8 +141,8 @@ class Component {
     }
   }
 
-  changeLIFTE_CYCLE_STATE(nextLIFTE_CYCLE_STATE) {
-    this.LIFTE_CYCLE_STATE = nextLIFTE_CYCLE_STATE;
+  changeLifeCycleState(nextLifeState) {
+    this.LIFE_CYCLE_STATE = nextLifeState;
   }
 }
 
@@ -150,6 +153,9 @@ class ElementWrapper {
   }
 
   setAttribute(attribute, value) {
+    // ---------------------------
+    // ---- add Event Listener ---
+    // ---------------------------
     if(attribute.match(/^on([\s\S]+)$/)){
       // let eventName = RegExp.$1.replace(/^[\s\S]/, (s) => s.toLowerCase());
       this.root.addEventListener(RegExp.$1.toLowerCase(), value);
