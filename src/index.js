@@ -19,7 +19,10 @@ function createElement(type, attributes, ...children) {
             child = '';
         }
         if(!(child instanceof Component || child instanceof ElementWrapper || child instanceof TextWrapper)) {
-          child = child +'';
+          // support function render template
+          if(typeof child !== 'function'){
+            child = child +'';
+          }
         }
         if(typeof child === 'string') {
           child = new TextWrapper(child);
